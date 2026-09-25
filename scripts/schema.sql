@@ -1,4 +1,4 @@
--- 胡淏跑步教练。SQLite 住资料库 runtime/跑步教练/coach.sqlite3，不进教学库。
+-- 跑步教练。SQLite 住资料库 runtime/跑步教练/coach.sqlite3，不进教学库。
 -- 采样用长表：华为加字段不用改列。-1 / 空值不当作成绩。
 
 PRAGMA journal_mode = WAL;

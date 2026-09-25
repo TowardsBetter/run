@@ -26,9 +26,15 @@ alive() {
 }
 
 if ! alive; then
-  PY="${MARGIN_READER_VENV:?找不到 MARGIN_READER_VENV，请检查 tools/asset_root.sh}/bin/python"
+  if [[ -n "${MARGIN_READER_VENV:-}" && -x "$MARGIN_READER_VENV/bin/python" ]]; then
+    PY="$MARGIN_READER_VENV/bin/python"
+  elif [[ -x "$ROOT/.venv/bin/python" ]]; then
+    PY="$ROOT/.venv/bin/python"
+  else
+    PY="$(command -v python3)"
+  fi
   if [[ ! -x "$PY" ]]; then
-    echo "边注阅读的 Python 不存在：$PY"
+    echo "找不到可用的 Python"
     exit 1
   fi
   cd "$ROOT"

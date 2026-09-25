@@ -10,7 +10,7 @@ tags:
 
 ==库是训练分析的底座；华为既定课表暂以只读快照接入，不另造一套本地计划。==
 
-这是 [[AI+/output（AI+胡淏）/胡淏+AI跑步教练/README|胡淏 + AI 跑步教练]] 的数据层。SQLite 文件在资料库 `runtime/跑步教练/coach.sqlite3`，不进教学库、不同步进 Obsidian。
+这是 [[AI+/output（AI+）/+AI跑步教练/README|AI + 跑步教练]] 的数据层。SQLite 文件在资料库 `runtime/跑步教练/coach.sqlite3`，不进教学库、不同步进 Obsidian。
 
 ## 它要解决什么
 

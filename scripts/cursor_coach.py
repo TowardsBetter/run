@@ -24,9 +24,17 @@ for path in (str(MARGIN_READER), str(VAULT / "tools")):
     if path not in sys.path:
         sys.path.insert(0, path)
 
-from asset_root import running_coach_root  # noqa: E402
-from reader.cursor_reply import CursorReplier, ReplyError  # noqa: E402
-from reader.secrets import read_cursor_api_key  # noqa: E402
+try:
+    from asset_root import running_coach_root  # noqa: E402
+    from reader.cursor_reply import CursorReplier, ReplyError  # noqa: E402
+    from reader.secrets import read_cursor_api_key  # noqa: E402
+except ImportError:
+    running_coach_root = None
+    CursorReplier = None
+    ReplyError = Exception
+
+    def read_cursor_api_key() -> str:
+        return ""
 
 # 与边注阅读当前保存的模型相同，一次回复用这一个字符串。
 DEFAULT_MODEL = "composer-2.5"
@@ -113,6 +121,8 @@ async def _once(
 ) -> ModelReply:
     from cursor_sdk import AsyncClient
 
+    if CursorReplier is None or running_coach_root is None:
+        raise ModelUnavailable("模型暂时未接通")
     text = str(prompt or "").strip()
     if not text:
         raise ModelUnavailable("prompt 为空")
