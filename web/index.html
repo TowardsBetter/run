@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    if (location.protocol === "file:") {
+      document.documentElement.innerHTML = "<body style='font:16px/1.5 sans-serif;max-width:36em;margin:40px auto;padding:0 16px'><h1>不要直接打开这个 HTML</h1><p>请回到文件夹，双击 <strong>打开仪表盘.command</strong>。浏览器会打开 http://127.0.0.1:18765/</p></body>";
+    }
+  </script>
+  <title>胡淏 + AI 跑步教练</title>
+  <link rel="stylesheet" href="styles.css?v=20260923review" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>胡淏 + AI 跑步教练</h1>
+      <p class="muted" id="meta-line">数据来自本机快照。</p>
+    </div>
+    <div class="sync">
+      <div class="sync-row">
+        <span class="sync-hint" id="session-hint"></span>
+        <a class="btn" href="https://health.cloud.huawei.com/TrainingCamp" target="_blank" rel="noopener">打开华为训练营</a>
+        <button type="button" class="btn primary" id="btn-refresh" title="Chrome 里打开训练营并登录，再点这里。登录态从这台电脑的 Chrome 里读，不用 F12、不用粘请求头。">更新数据</button>
+      </div>
+      <p class="sync-msg" id="sync-msg" hidden></p>
+    </div>
+  </header>
+
+  <section class="overview" id="overview" aria-label="本月跑步概要"></section>
+
+  <section class="weather" id="weather" aria-label="上海天气与全局时间窗"></section>
+
+  <main class="layout">
+    <aside class="col col-left card">
+      <div class="ahead" id="huawei-plan" aria-label="接下来 7 天的华为训练计划"></div>
+      <div class="log-split" aria-hidden="true"></div>
+      <div class="card-head">
+        <h2>跑步 Log</h2>
+        <span class="head-note" id="log-range"></span>
+      </div>
+      <div class="log-list" id="log-list"></div>
+    </aside>
+
+    <section class="col col-mid">
+      <article class="card session-card">
+        <div class="card-head session-head">
+          <div>
+            <h2 id="detail-title">本次训练</h2>
+            <p class="muted" id="detail-sub">点左边一条，或默认最近一次。</p>
+          </div>
+        </div>
+        <div class="stat-row" id="detail-stats"></div>
+        <div class="chart-block session-chart-block">
+          <div class="chart-head">
+            <h3>运动数据</h3>
+            <div class="metric-chips" id="session-chips"></div>
+          </div>
+          <div id="session-plot" class="session-plot" role="img" aria-label="本次运动数据"></div>
+        </div>
+        <div class="chart-block map-block">
+          <div class="chart-head">
+            <h3>路线</h3>
+          </div>
+          <div id="route-map" class="route-map" role="img" aria-label="本次轨迹"></div>
+        </div>
+      </article>
+    </section>
+
+    <aside class="col col-right">
+      <article class="card coach-card" id="coach-card">
+        <div class="card-head">
+          <div>
+            <h2>跑步教练</h2>
+          </div>
+        </div>
+        <div class="coach-goal" id="coach-goal"></div>
+        <div class="coach-summary" id="coach-summary" aria-label="教练可见的数据"></div>
+        <section class="coach-brief" id="coach-brief" aria-label="本次训练简报" aria-live="polite"></section>
+        <form class="coach-form" id="coach-form">
+          <div class="coach-compose-head">
+            <label for="coach-input">补充体感，继续和教练聊</label>
+            <span>Enter 发送 · Shift+Enter 换行</span>
+          </div>
+          <textarea id="coach-input" rows="2" placeholder="说说身体的感觉，或者对这份复盘追问一句。"></textarea>
+          <p class="coach-form-status muted" id="coach-form-status" aria-live="polite"></p>
+        </form>
+        <div class="coach-dialogue-head">
+          <h3>训练对话</h3>
+          <span>最近的在上面</span>
+        </div>
+        <div class="coach-log" id="coach-log" aria-live="polite"></div>
+      </article>
+    </aside>
+  </main>
+
+  <script src="/vendor/echarts.min.js"></script>
+  <script src="weather-band.js?v=20260923cleanup"></script>
+  <script src="session-chart.js?v=20260923cleanup"></script>
+  <script src="route-map.js?v=20260923amap2"></script>
+  <script src="app.js?v=20260924brief"></script>
+</body>
+</html>
